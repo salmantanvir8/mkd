@@ -1,5 +1,5 @@
 let url_preset = "";
-let dynamicData = {}
+let changed_data = {}
 let timer = 10
 let finalActives = [];
 let dataToReturn = localStorage.getItem("answers") ? JSON.parse(localStorage.getItem("answers")) : [];
@@ -92,17 +92,18 @@ function terminateQuiz(){
     'background-color': 'rgba(0,0,0,0.95)'    
   });
 
-  overlay.append(`<div class="container center-everything"> <div> You have allergy to one of the main ingredients in our system </div> <h1> ${"Quiz now will be terminated"} </h1> <p class="dynamic-counter"> ${timer} <p>  </div>`)
-  var intervalId = setInterval(function() {
+  // overlay.append(`<div class="container center-everything"> <div> You have allergy to one of the main ingredients in our system </div> <h1> ${"Quiz now will be terminated"} </h1> <p class="dynamic-counter"> ${timer} <p>  </div>`)
+  overlay.append(`<div class="container center-everything"> <div class="dynamic-message"> ${changed_data.message} </div> <h4 class="dynamic-header"> ${changed_data.header_text} </h4> <p class="dynamic-counter"> ${timer} <p>  </div>`)
+
+  let counterinterval = setInterval(function() {
     timer--;
     $('.dynamic-counter').text(timer);
     if (timer <= 0) {
-      clearInterval(intervalId);
+      clearInterval(counterinterval);
       $(location).attr('href', 'http://localhost:3001/');
     }
   }, 1000); 
 
-  // Append the overlay to the body element
   $('body').append(overlay);
 }
 
@@ -135,15 +136,13 @@ async function terminateConfigurationDynamic () {
   $.ajax({
     url: url_preset + "/admin/terminate_configuration",
     method: "GET",
-    success: function(data) {
-      console.log(data)
-   
-     dynamicData = data.data[0]
-     counter = data.data[0].counter
+    success: function(data) {   
+     changed_data = data.data[0]
+     timer = data.data[0].counter
   
     },
     error: function(error) {
-      console.log(error); // log any errors to the console
+      console.log("error occured while fetching data !!!! ", error.message); // log any errors to the console
     }
   });
 }

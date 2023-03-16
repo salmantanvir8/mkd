@@ -78,9 +78,9 @@ app.get("/admin/terminate_configuration-edit/:id", SessionService.verifySessionM
     if (req.session.csrf === undefined) {
       req.session.csrf = SessionService.randomString(100);
     }
-    const terminateConfigurationAdminEditViewModel = require("../../view_models/terminated_configuration_edit_view_model");
+    const editTerminatedConfig = require("../../view_models/edit_terminated_configuration_view_model");
   
-    const viewModel = new terminateConfigurationAdminEditViewModel(db.terminate_configuration, "Edit Terminated Configuration", "", "", "/admin/terminate_configuration");
+    const viewModel = new editTerminatedConfig(db.terminate_configuration, "Edit Terminated Configuration", "", "", "/admin/terminate_configuration");
   
     try {
       const exists = await db.terminate_configuration.getByPK(id);
@@ -108,9 +108,9 @@ app.post("/admin/terminate_configuration-edit/:id", SessionService.verifySession
     req.session.csrf = SessionService.randomString(100);
   }
 
-  const terminateConfigurationAdminEditViewModel = require("../../view_models/terminated_configuration_edit_view_model");
+  const editTerminatedConfig = require("../../view_models/edit_terminated_configuration_view_model");
 
-  const viewModel = new terminateConfigurationAdminEditViewModel(db.terminate_configuration, "Edit Terminated Configuration", "", "", "/admin/terminate_configuration");
+  const viewModel = new editTerminatedConfig(db.terminate_configuration, "Edit Terminated Configuration", "", "", "/admin/terminate_configuration");
   viewModel.form_fields = { variables_scores: "", name: "", id: "" };
   viewModel.output_variables = await db.output_variable.getAll();
   const { message, header_text, counter } = req.body;

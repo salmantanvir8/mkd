@@ -1,0 +1,63 @@
+<% if(it.layout_clean_mode) {%>
+<% layout("../layouts/admin/Clean") %>
+<% } else {%>
+<% layout("../layouts/admin/Main") %>
+<%}%>
+
+<%~ includeFile("../partials/admin/Breadcrumb", it)%>
+
+<div class="tab-content mx-4 my-4">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <%~ includeFile("../partials/admin/GlobalResponse.eta", it) %>
+      <div class="form-container card p-4">
+        <h5 class="primaryHeading2 mb-4 text-md-left pl-3">
+          <%= it.heading %>
+        </h5>
+
+        <form action="/admin/terminate_configuration-edit/<%= it.form_fields['id'] %>" method="POST">
+
+
+          <div class="form-group required col-md-5 col-sm-12 ">
+            <label for="name" class="control-label">Message</label>
+
+
+            <input type="text" required class="form-control data-input" id="message" name="message" value="<%= it.form_fields['message'] %>" />
+
+
+          </div>
+
+          <div class="form-group required col-md-7 col-sm-9 col-12" style="max-width: 375px;">
+            <label for="handle" class="control-label">Header Text</label>
+
+            <input type="text" required class="form-control data-input" id="header_text" name="header_text" value="<%= it.form_fields['header_text'] %>" />
+
+
+          </div>
+          <div class="form-group required col-md-5 col-sm-12 ">
+            <label for="description" class="control-label">Counter</label>
+
+
+            <input type="text" required class="form-control data-input" id="counter" name="counter" value="<%= it.form_fields['counter'] %>" />
+
+
+          </div>
+
+          <div class="d-flex flex-wrap mb-5">
+            <% it.output_variables?.forEach(oVar => { %>
+            <div class="form-group col-md-6 col-12" style="max-width: 311px;">
+              <label for="<%= oVar.name.replace(/ /g,"_")+'_id' %>" class="control-label"><%= oVar.name %></label>
+              <input type="number" class="form-control data-input weight-active-score <%=  it.form_fields[oVar.name] ? 'has-value':'' %>" oninput="weightScoreInputChange(this, event)" id="<%= oVar.name.replace(/ /g,"_")+'_id' %>" value="<%= it.form_fields[oVar.name] %>" name="<%= oVar.name %>" />
+            </div>
+            <% }) %>
+          </div>
+
+          <div class="form-group pl-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

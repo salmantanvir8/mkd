@@ -150,21 +150,10 @@
           </td> -->
 
 
-          <td>
-            <% if(data.black_list_actives){ 
-              let blActives = JSON.parse(data.black_list_actives);
-              blActives = Array.isArray(blActives) ? blActives : [blActives];
-              %>
-            <% blActives.forEach(blActive => { %>
-            <%= blActive %></br>
-            <% }) %>
-            <% } else { %>
-            N/A
-            <% } %>
-          </td>
 
 
-          <td><a class="btn btn-link  link-underline text-underline  btn-sm" target="_self" href="/admin/terminate_configuration-view/<%= data.id %>">View</a>&nbsp;<a target="_self" class="btn btn-link  link-underline text-underline  btn-sm" href="/admin/terminate_configuration-edit/<%= data.id %>">Edit</a>&nbsp;<a class="btn btn-link  link-underline text-underline text-danger btn-sm" href="/admin/terminate_configuration-delete/<%= data.id %>">Delete</a>&nbsp;</td>
+          <td><a target="_self" class="btn btn-link  link-underline text-underline  btn-sm" href="/admin/terminate_configuration-edit/<%= data.id %>">Edit</a>&nbsp;<a class="btn btn-link  link-underline text-underline text-danger btn-sm" href="/admin/terminate_configuration-delete/<%= data.id %>">Delete
+          </a>&nbsp;</td>
         </tr>
         <% }) %>
       </tbody>
